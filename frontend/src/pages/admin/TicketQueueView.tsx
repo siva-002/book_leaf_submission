@@ -290,7 +290,7 @@ export const TicketQueueView: React.FC<TicketQueueViewProps> = ({
                     <span>•</span>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <Clock size={12} />
-                      Received {new Date(t.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })} ({t.ageHours || 0}h ago)
+                      Received {new Date(t.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })}{t.ageHours && t.ageHours > 0 ? ` (${t.ageHours}h ago)` : ''}
                     </span>
                     {t.assigned_to && (
                       <>

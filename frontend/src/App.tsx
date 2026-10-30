@@ -102,7 +102,7 @@ const AppContent: React.FC = () => {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f8fafc' }}>
-      <Navbar />
+      <Navbar onGoDashboard={() => window.dispatchEvent(new CustomEvent('app:go-dashboard'))} />
 
       {/* Interactive Real-Time Toast Alert */}
       {toast && (

@@ -3,8 +3,15 @@ import { useAuth } from '../context/AuthContext';
 import { BookOpen, LogOut, Radio, Shield, User as UserIcon, Feather } from 'lucide-react';
 import { NotificationCenter } from './NotificationCenter';
 
-export const Navbar: React.FC<{ activeTab?: string; onTabChange?: (tab: string) => void }> = () => {
+export const Navbar: React.FC<{ activeTab?: string; onTabChange?: (tab: string) => void; onGoDashboard?: () => void }> = ({ onGoDashboard }) => {
   const { user, logout } = useAuth();
+
+  const handleBrandClick = () => {
+    if (onGoDashboard) {
+      onGoDashboard();
+    }
+    window.dispatchEvent(new CustomEvent('app:go-dashboard'));
+  };
 
   return (
     <header
@@ -29,8 +36,28 @@ export const Navbar: React.FC<{ activeTab?: string; onTabChange?: (tab: string) 
           justifyContent: 'space-between',
         }}
       >
-        {/* Brand */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        {/* Brand Logo & Title (Click to Go to Dashboard) */}
+        <div
+          onClick={handleBrandClick}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleBrandClick();
+            }
+          }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '14px',
+            cursor: 'pointer',
+            userSelect: 'none',
+            transition: 'opacity 0.15s ease, transform 0.15s ease',
+          }}
+          className="brand-logo-btn"
+          title="Go to Dashboard"
+        >
           <div
             style={{
               width: '38px',

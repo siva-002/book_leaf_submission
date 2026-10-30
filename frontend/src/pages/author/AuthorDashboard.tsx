@@ -57,6 +57,18 @@ export const AuthorDashboard: React.FC = () => {
     return unregister;
   }, [tickets, registerTicketNavigator]);
 
+  // Listen for header logo clicks to return to author dashboard
+  useEffect(() => {
+    const handleGoDashboard = () => {
+      setSelectedTicket(null);
+      setSubmissionSuccessTicket(null);
+      setActiveTab('books');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    window.addEventListener('app:go-dashboard', handleGoDashboard);
+    return () => window.removeEventListener('app:go-dashboard', handleGoDashboard);
+  }, []);
+
   // Fetch initial books & tickets
   useEffect(() => {
     const fetchData = async () => {

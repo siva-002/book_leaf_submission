@@ -41,6 +41,17 @@ export const AdminDashboard: React.FC = () => {
     return unregister;
   }, [registerTicketNavigator]);
 
+  // Listen for header logo clicks to return to dashboard queue
+  useEffect(() => {
+    const handleGoDashboard = () => {
+      setSelectedTicketId(null);
+      setActiveTab('queue');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    window.addEventListener('app:go-dashboard', handleGoDashboard);
+    return () => window.removeEventListener('app:go-dashboard', handleGoDashboard);
+  }, []);
+
   // Filters: Default to 'active' queue so resolved tickets do not appear in active queue
   const [statusFilter, setStatusFilter] = useState<string>('active');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
